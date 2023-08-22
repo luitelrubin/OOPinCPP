@@ -1,55 +1,47 @@
 /*
-Single inheritance
+Overloading pre-increment operator
 */
 
 #include <iostream>
 using namespace std;
 
-class Student
+class rectangle
 {
-    char *name;
-    int age;
+private:
+    int length;
+    int breadth;
 
 public:
-    Student(char *n, int a) : name(n), age(a) {}
-
-    char *getName()
+    rectangle(int l, int b)
     {
-        return name;
+        length = l;
+        breadth = b;
+    }
+
+    void operator++()
+    {
+        ++length;
+        ++breadth;
     }
 
     void display()
     {
-        cout << "Name:: " << name << endl;
-        cout << "Age:: " << age << endl;
-    }
-};
-
-class ForeignStudent : public Student
-{
-    char *country;
-
-public:
-    ForeignStudent(char *n, int a, char *c) : Student(n, a), country(c) {}
-
-    void displayForeign()
-    {
-        display();
-        cout << "Country:: " << country << endl;
+        cout << "Length = " << length << endl
+             << "Breadth = " << breadth;
     }
 };
 
 int main()
 {
-    ForeignStudent fs("Mark", 21, "UK");
-    fs.displayForeign();
-    cout << fs.getName();
+    rectangle r1(12, 15);
+    ++r1; // this is equivalent to ++r1.operator()
+    r1.display();
+
     return 0;
 }
 
 /*
 Output:
-Name:: Mark
-Age:: 21
-Country:: UK
+Length = 13
+Breadth = 16
 */

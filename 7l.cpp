@@ -1,112 +1,45 @@
 /*
-Virtual Base Class
+Conversion from user defined type to basic type
 */
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
-class Person
+class Distance
 {
-protected:
-    char name[20];
-    int age;
+private:
+    int feet;
+    float inches;
 
 public:
-    void getdata()
+    Distance(int f = 0, int i = 0)
     {
-        cout << "Enter name and age: ";
-        cin >> name >> age;
+        feet = f;
+        inches = i;
     }
 
-    void display()
+    void showdistusual()
     {
-        cout << "Name: " << name << endl;
-        cout << "Age: " << age << endl;
-    }
-};
-
-class Employee : virtual public Person
-{
-protected:
-    int eid, salary;
-
-public:
-    void getdata()
-    {
-        cout << "Enter Employee Id and salary: ";
-        cin >> eid >> salary;
+        cout << feet << " feet, " << inches << " inches";
     }
 
-    void display()
+    operator float()
     {
-        cout << "Eid: " << eid << endl;
-        cout << "Salary: " << salary << endl;
-    }
-};
-
-class Student : public virtual Person
-{
-protected:
-    int sid;
-    char faculty[20];
-
-public:
-    void getdata()
-    {
-        cout << "Enter student ID and faculty: ";
-        cin >> sid >> faculty;
-    }
-
-    void display()
-    {
-        cout << "Student Id: " << sid << endl;
-        cout << "Faculty: " << faculty << endl;
-    }
-};
-
-class TeachingAssistant : public Employee, public Student
-{
-    char course[20];
-
-public:
-    void getdata()
-    {
-        Person::getdata();
-        Employee::getdata();
-        Student::getdata();
-        cout << "Enter course: ";
-        cin >> course;
-    }
-
-    void displaydata()
-    {
-        Person::display();
-        Employee::display();
-        Student::display();
-        cout << "Course: " << course;
+        float retval = feet + inches / 12;
+        return (retval);
     }
 };
 
 int main()
 {
-    TeachingAssistant ta;
-    ta.getdata();
-    cout << "*****TA details*****" << endl;
-    ta.displaydata();
+    Distance d1(5, 11);
+    float newval = float(d1);
+    cout << "Feet and inches in decimal = " << setprecision(3) << newval;
+    return 0;
 }
 
 /*
 Output:
-Enter name and age: Superman 21
-Enter Employee Id and salary: 007 100000
-Enter student ID and faculty: 007 IOST
-Enter course: CSIT
-*****TA details*****
-Name: Superman
-Age: 21
-Eid: 7
-Salary: 100000
-Student Id: 7
-Faculty: IOST
-Course: CSIT
+Feet and inches in decimal = 5.92
 */

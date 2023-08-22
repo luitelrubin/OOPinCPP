@@ -1,45 +1,65 @@
 /*
-Order of execution of constructors
+String concatenation
 */
 
 #include <iostream>
+#include <cstring>
+
 using namespace std;
 
-class A
+class String
 {
+    char *s;
+    int l; // length of string
+
 public:
-    A()
+    void getdata()
     {
-        cout << "Class A constructor" << endl;
+        char str[20];
+        cout << "Enter a string: ";
+        cin >> str;
+
+        l = strlen(str);
+        s = new char[l + 1];
+        strcpy(s, str);
+    }
+
+    void display()
+    {
+        cout << s;
+    }
+
+    String operator+(String x)
+    {
+        String temp;
+        temp.s = new char[l + x.l + 1];
+        strcpy(temp.s, s);
+        strcat(temp.s, x.s);
+        return temp;
     }
 };
 
-class B : public A
-{
-public:
-    B()
-    {
-        cout << "Class B constructor" << endl;
-    }
-};
-
-class C : public B
-{
-public:
-    C()
-    {
-        cout << "Class C constructor" << endl;
-    }
-};
 int main()
 {
-    C c1;
+    String s1, s2, s3;
+
+    s1.getdata();
+    s2.getdata();
+
+    s3 = s1 + s2;
+
+    s1.display();
+    cout << " + ";
+    s2.display();
+    cout << " = ";
+    s3.display();
+
     return 0;
 }
 
 /*
 Output:
-Class A constructor
-Class B constructor
-Class C constructor
+Enter a string: Hand
+Enter a string: Sanitizer
+Hand + Sanitizer = HandSanitizer
 */

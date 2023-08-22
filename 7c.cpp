@@ -1,80 +1,53 @@
 /*
-Hierarchical Inheritance
+Overloading increment operator using friend function
 */
 
 #include <iostream>
 using namespace std;
 
-class Employee
-{
-    int eid;
-    int salary;
-
-public:
-    void getEmp()
-    {
-        cout << "Enter Id and salary of employee: ";
-        cin >> eid >> salary;
-    }
-
-    void displayEmp()
-    {
-        cout << "Eid: " << eid << endl;
-        cout << "Salary: " << salary << endl;
-    }
-};
-class Engineer : public Employee
+class Rectangle
 {
 private:
-    char dept[10];
+    int length, breadth;
 
 public:
-    void getData()
+    Rectangle(int l, int b)
     {
-        getEmp();
-        cout << "Enter department: ";
-        cin >> dept;
+        length = l;
+        breadth = b;
     }
 
-    void displayData()
+    friend void operator++(Rectangle &);
+
+    void display()
     {
-        displayEmp();
-        cout << "Department: " << dept << endl;
+        cout << "Length = " << length << endl;
+        cout << "Breadth = " << breadth << endl;
+        cout << "-----" << endl;
     }
 };
-class Typist : public Employee
+
+void operator++(Rectangle &rect)
 {
-    int tSpeed;
-
-public:
-    void getData()
-    {
-        getEmp();
-        cout << "Enter typing speed: ";
-        cin >> tSpeed;
-    }
-    void displayData()
-    {
-        displayEmp();
-        cout << "Typing speed: " << tSpeed << endl;
-    }
-};
+    ++rect.length;
+    ++rect.breadth;
+}
 
 int main()
 {
-    Engineer e;
-    Typist t;
-
-    e.getData();
-    t.getData();
-
-    cout << "****Employee Details****" << endl;
-    e.displayData();
-    t.displayData();
+    Rectangle r1(12, 15);
+    r1.display(); // before incrementing
+    ++r1;
+    r1.display(); // after incrementing
     return 0;
 }
 
 /*
 Output:
-
+Length = 12
+Breadth = 15
+-----
+Length = 13
+Breadth = 16
+-----
 */

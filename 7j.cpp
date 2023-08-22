@@ -1,38 +1,77 @@
 /*
-Method Overriding
+overloaded '+=' assignment operator
 */
 
 #include <iostream>
 using namespace std;
 
-class A
+class Distance
 {
+private:
+    int feet;
+    float inches;
+
 public:
-    void show()
+    Distance()
     {
-        cout << "Class A" << endl;
+        feet = 0;
+        inches = 0;
     }
+
+    Distance(int f, float i)
+    {
+        feet = f;
+        inches = i;
+    }
+
+    void getdist()
+    {
+        cout << "Enter feet and inches: ";
+        cin >> feet >> inches;
+    }
+
+    void showdist()
+    {
+        cout << feet << " feet " << inches << " inches" << endl;
+    }
+
+    void operator+=(Distance);
 };
 
-class B : public A
+void Distance::operator+=(Distance d)
 {
-public:
-    void show()
+    feet += d.feet;
+    inches += d.inches;
+
+    if (inches >= 12)
     {
-        cout << "Class B" << endl;
+        inches -= 12;
+        feet++;
     }
-};
+}
 
 int main()
 {
-    B b;
-    b.show();    // invokes the member function from class B
-    b.A::show(); // invokes the member function from class A
+    Distance d1, d2;
+
+    d1.getdist();
+    d2.getdist();
+
+    cout << "D1 = ";
+    d1.showdist();
+    cout << "D2 = ";
+    d2.showdist();
+    cout << "After D1 += D2, D1 = ";
+    d1 += d2;
+    d1.showdist();
     return 0;
 }
 
 /*
 Output:
-Class B
-Class A
+Enter feet and inches: 3 11
+Enter feet and inches: 4 2
+D1 = 3 feet 11 inches
+D2 = 4 feet 2 inches
+After D1 += D2, D1 = 8 feet 1 inches
 */

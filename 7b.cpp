@@ -1,90 +1,47 @@
 /*
-Multiple inheritance
+Overloading post-increment operator
 */
 
 #include <iostream>
 using namespace std;
 
-class Teacher
+class rectangle
 {
 private:
-    int tid;
-    char subject[20];
+    int length;
+    int breadth;
 
 public:
-    void getTeacher()
+    rectangle(int l, int b)
     {
-        cout << "Enter Teacher Id: ";
-        cin >> tid;
-        cout << "Enter Subject: ";
-        cin >> subject;
-        // getline(cin, subject);
+        length = l;
+        breadth = b;
     }
 
-    void displayTeacher()
+    void operator++(int)
     {
-        cout << "Teacher Id: " << tid << " Teaching subject: " << subject << endl;
-    }
-};
-class Staff
-{
-private:
-    int sid;
-    char level[20];
-
-public:
-    void getStaff()
-    {
-        cout << "Enter Staff Id: ";
-        cin >> sid;
-        cout << "Enter Staff level: ";
-        cin >> level;
-        // getline(cin, level);
-    }
-    void displayStaff()
-    {
-        cout << "Staff Id: " << sid << " Level: " << level << endl;
-    }
-};
-class Coordinator : public Teacher, public Staff
-{
-    char program[10];
-
-public:
-    void getData()
-    {
-        getTeacher();
-        getStaff();
-        cout << "Enter program: ";
-        cin >> program;
+        length++;
+        breadth++;
     }
 
-    void displayData()
+    void display()
     {
-        displayTeacher();
-        displayStaff();
-        cout << "Program: " << program;
+        cout << "Length = " << length << endl
+             << "Breadth = " << breadth;
     }
 };
 
 int main()
 {
-    Coordinator c;
-    c.getData();
-    cout << "----Co-ordinator Details----" << endl;
-    c.displayData();
+    rectangle r1(12, 15);
+    r1++; // this is equivalent to r1.operator++()
+    r1.display();
+
     return 0;
 }
 
 /*
 Output:
-Enter Teacher Id: 1
-Enter Subject: OOP
-Enter Staff Id: 2
-Enter Staff level: Teaching-associate
-Enter program: Csit
-----Co-ordinator Details----
-Teacher Id: 1 Teaching subject: OOP
-Staff Id: 2 Level: Teaching-associate
-Program: Csit
+Length = 13
+Breadth = 16
 */

@@ -1,40 +1,42 @@
 /*
-Ambuiguity in multiple inheritance and removal of ambiguity
+Conversion from basic type to user defined type
 */
 
 #include <iostream>
 using namespace std;
 
-class A
+class Distance
 {
+    int feet;
+    int inches;
+
 public:
-    void show()
+    Distance()
     {
-        cout << "This is class A" << endl;
+        feet = 0;
+        inches = 0;
+    }
+
+    Distance(float decimalval)
+    {
+        feet = int(decimalval);
+        inches = (decimalval - feet) * 12;
+    }
+
+    void showdist()
+    {
+        cout << feet << " feet, " << inches << " inches" << endl;
     }
 };
 
-class B
-{
-public:
-    void show()
-    {
-        cout << "This is class B" << endl;
-    }
-};
-class C : public A, public B
-{
-};
 int main()
 {
-    C c;
-    c.A::show(); // good
-    c.B::show(); // good
-    c.show();    // ambiguous
+    Distance d1(3.7);
+    d1.showdist();
     return 0;
 }
 
 /*
 Output:
-error: request for member 'show' is ambiguous
+3 feet, 8 inches
 */
